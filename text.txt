@@ -1,0 +1,1230 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaBoost Pro - Social Media Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-bg: #f9fafb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .platform-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px 20px 0 0;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .price-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .price-input-group input[type="number"] {
+            flex: 1;
+        }
+
+        .quantity-select {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .quantity-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover, .quantity-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .admin-only {
+            display: none;
+        }
+
+        .order-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 0;
+            }
+            
+            .chat-window {
+                width: 90%;
+                right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="hero-section">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-4">InstaBoost Pro</h1>
+                <p class="lead">Boost Your Social Media Presence Instantly</p>
+            </div>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-4">Customer Login</h3>
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                                <button type="button" class="btn btn-outline-primary w-100" onclick="showRegisterForm()">Register</button>
+                            </form>
+                            
+                            <div id="registerForm" class="mt-4" style="display: none;">
+                                <h4 class="text-center mb-3">Create Account</h4>
+                                <form id="customerRegisterForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="registerEmail" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="registerPassword" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                </form>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <button class="btn btn-secondary" onclick="showAdminLogin()">Admin Login</button>
+                            </div>
+                            
+                            <div id="adminLoginForm" class="mt-3" style="display: none;">
+                                <h4 class="text-center mb-3">Admin Login</h4>
+                                <form id="adminForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Admin Password</label>
+                                        <input type="password" class="form-control" id="adminPassword" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger w-100">Login as Admin</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Page -->
+    <div id="infoPage" class="page">
+        <div class="hero-section">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-4">Welcome to InstaBoost Pro</h1>
+                <p class="lead">Your One-Stop Solution for Social Media Growth</p>
+            </div>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card border-0 shadow-lg mb-4">
+                        <div class="card-body p-5">
+                            <h3 class="mb-4">About Our Services</h3>
+                            <p class="mb-4">InstaBoost Pro provides high-quality social media services to help you grow your online presence. We offer followers, likes, views, and more for Instagram, Facebook, YouTube, and Telegram.</p>
+                            
+                            <h4 class="mb-3">Why Choose Us?</h4>
+                            <ul class="mb-4">
+                                <li>Instant delivery of services</li>
+                                <li>100% real and active engagement</li>
+                                <li>Secure payment options</li>
+                                <li>24/7 customer support</li>
+                                <li>Competitive prices</li>
+                            </ul>
+                            
+                            <h4 class="mb-3">Stay Updated!</h4>
+                            <p class="mb-3">Join our channels for the latest price updates and special offers:</p>
+                            <div class="d-grid gap-2">
+                                <a href="https://whatsapp.com/channel/0029VbBOvEXEFeXf4dtind0i" class="btn btn-success" target="_blank">
+                                    <i class="bi bi-whatsapp me-2"></i>Join WhatsApp Channel
+                                </a>
+                                <a href="https://t.me/+HwDwwS9W9ew2NDI1" class="btn btn-info" target="_blank">
+                                    <i class="bi bi-telegram me-2"></i>Join Telegram Channel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-lg" onclick="showPlatformsPage()">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Let's Start
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Platforms Page -->
+    <div id="platformsPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-between align-items-center mb-4">
+                <div class="col">
+                    <h2 class="mb-0">Choose Your Platform</h2>
+                    <p class="text-muted mb-0">Total Registrations: <span id="totalRegistrations">0</span></p>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-danger admin-only" onclick="showPriceChange()">
+                        <i class="bi bi-pencil-square me-2"></i>Change Prices
+                    </button>
+                    <button class="btn btn-primary admin-only" onclick="showRegisterPage()">
+                        <i class="bi bi-people me-2"></i>View Registrations
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="platform-card" onclick="showServicePage('instagram')">
+                        <div class="text-center">
+                            <i class="bi bi-instagram" style="font-size: 48px; color: #E4405F;"></i>
+                            <h4 class="mt-3">Instagram</h4>
+                            <p class="text-muted">Followers, Likes, Views & More</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="platform-card" onclick="showServicePage('facebook')">
+                        <div class="text-center">
+                            <i class="bi bi-facebook" style="font-size: 48px; color: #1877F2;"></i>
+                            <h4 class="mt-3">Facebook</h4>
+                            <p class="text-muted">Followers, Likes, Views</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="platform-card" onclick="showServicePage('youtube')">
+                        <div class="text-center">
+                            <i class="bi bi-youtube" style="font-size: 48px; color: #FF0000;"></i>
+                            <h4 class="mt-3">YouTube</h4>
+                            <p class="text-muted">Likes, Subscribers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="platform-card" onclick="showServicePage('telegram')">
+                        <div class="text-center">
+                            <i class="bi bi-telegram" style="font-size: 48px; color: #0088CC;"></i>
+                            <h4 class="mt-3">Telegram</h4>
+                            <p class="text-muted">Subscribers, Likes, Views</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Page -->
+    <div id="servicePage" class="page">
+        <div class="container mt-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <button class="btn btn-outline-primary" onclick="showPlatformsPage()">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Platforms
+                    </button>
+                </div>
+            </div>
+            
+            <h2 class="mb-4" id="servicePageTitle">Instagram Services</h2>
+            
+            <div id="servicesContainer">
+                <!-- Services will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-5">
+                <button class="btn btn-primary btn-lg" onclick="proceedToPayment()">
+                    <i class="bi bi-cart-check me-2"></i>Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Management Page -->
+    <div id="registerPage" class="page">
+        <div class="container mt-5">
+            <h2 class="mb-4">Registered Users</h2>
+            
+            <div id="usersList">
+                <!-- Users list will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="showPlatformsPage()">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Platforms
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price Change Page -->
+    <div id="priceChangePage" class="page">
+        <div class="container mt-5">
+            <h2 class="mb-4">Price Management</h2>
+            
+            <div id="priceChangeContainer">
+                <!-- Price change forms will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="showPlatformsPage()">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Platforms
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="paymentPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-4">Payment Details</h3>
+                            
+                            <div class="alert alert-info">
+                                <h5 class="alert-heading">UPI Payment Details</h5>
+                                <p class="mb-0">Please send payment to: <strong>9173335812@axl</strong></p>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Transaction ID</label>
+                                <input type="text" class="form-control" id="transactionId" placeholder="Enter your transaction ID">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">UTR Number</label>
+                                <input type="text" class="form-control" id="utrNumber" placeholder="Enter UTR number">
+                            </div>
+                            
+                            <div class="alert alert-warning">
+                                <small><strong>Note:</strong> If your payment is successful, please provide the transaction ID and UTR number for verification.</small>
+                            </div>
+                            
+                            <div id="orderSummary" class="mb-4">
+                                <!-- Order summary will be shown here -->
+                            </div>
+                            
+                            <button class="btn btn-primary w-100" onclick="submitPayment()">
+                                <i class="bi bi-check-circle me-2"></i>Submit Payment Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Status Page -->
+    <div id="orderStatusPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg text-center">
+                        <div class="card-body p-5">
+                            <i class="bi bi-hourglass-split" style="font-size: 64px; color: var(--primary-color);"></i>
+                            <h3 class="mt-4">Payment Verification</h3>
+                            <p class="text-muted">Your payment details have been submitted. Please wait while we verify your transaction.</p>
+                            <div class="spinner-border text-primary mt-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Page -->
+    <div id="orderSuccessPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg text-center">
+                        <div class="card-body p-5">
+                            <i class="bi bi-check-circle-fill" style="font-size: 64px; color: var(--success-color);"></i>
+                            <h3 class="mt-4">Payment Successful!</h3>
+                            <p class="text-muted">Your order has been confirmed and is now being processed. Please wait 2-3 hours for delivery.</p>
+                            <button class="btn btn-primary mt-3" onclick="showPlatformsPage()">
+                                <i class="bi bi-house me-2"></i>Back to Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Failed Page -->
+    <div id="orderFailedPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg text-center">
+                        <div class="card-body p-5">
+                            <i class="bi bi-x-circle-fill" style="font-size: 64px; color: var(--danger-color);"></i>
+                            <h3 class="mt-4">Payment Failed</h3>
+                            <p class="text-muted">Your payment could not be verified. Please try again with correct payment details.</p>
+                            <button class="btn btn-primary mt-3" onclick="backToPayment()">
+                                <i class="bi bi-arrow-left me-2"></i>Try Again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Orders Page -->
+    <div id="adminOrdersPage" class="page">
+        <div class="container mt-5">
+            <h2 class="mb-4">Order Management</h2>
+            
+            <div id="ordersList">
+                <!-- Orders will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="showPlatformsPage()">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Platforms
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Page -->
+    <div id="orderDetailsPage" class="page">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <h3 class="mb-4">Order Details</h3>
+                            
+                            <div id="orderDetailsContent">
+                                <!-- Order details will be loaded here -->
+                            </div>
+                            
+                            <div class="d-flex gap-3 mt-4 admin-only">
+                                <button class="btn btn-success flex-fill" onclick="approveOrder()">
+                                    <i class="bi bi-check-circle me-2"></i>Approve Payment
+                                </button>
+                                <button class="btn btn-danger flex-fill" onclick="rejectOrder()">
+                                    <i class="bi bi-x-circle me-2"></i>Reject Payment
+                                </button>
+                                <button class="btn btn-secondary flex-fill" onclick="deleteOrder()">
+                                    <i class="bi bi-trash me-2"></i>Delete Order
+                                </button>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <button class="btn btn-outline-primary" onclick="showAdminOrders()">
+                                    <i class="bi bi-arrow-left me-2"></i>Back to Orders
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <button class="chat-button" onclick="toggleChat()">
+            <i class="bi bi-chat-dots-fill"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="bi bi-headset me-2"></i>Customer Support
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="text-center text-muted mb-3">
+                    <small>Welcome to our support chat!</small>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="chatInput" placeholder="Type your message...">
+                    <button class="btn btn-primary" onclick="sendMessage()">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
+                <div class="text-center mt-2">
+                    <small class="text-muted">Need personal assistance?</small>
+                    <br>
+                    <a href="https://t.me/+HwDwwS9W9ew2NDI1" target="_blank" class="btn btn-sm btn-info mt-1">
+                        <i class="bi bi-telegram me-1"></i>Contact Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Data Storage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let isAdmin = false;
+        let currentUser = null;
+        let selectedServices = [];
+        let currentOrder = null;
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let prices = JSON.parse(localStorage.getItem('prices')) || {
+            instagram: {
+                followers: { base: 40, unit: 100 },
+                reelsViews: { base: 40, unit: 10000 },
+                postLikes: { base: 20, unit: 100 },
+                postShares: { base: 30, unit: 1000 },
+                storyPollVotes: { base: 50, unit: 100 }
+            },
+            facebook: {
+                followers: { base: 60, unit: 1000 },
+                reelsViews: { base: 25, unit: 1000 },
+                postLikes: { base: 30, unit: 100 }
+            },
+            youtube: {
+                likes: { base: 60, unit: 1000 },
+                subscribers: { base: 0, unit: 0, available: false }
+            },
+            telegram: {
+                subscribers: { base: 40, unit: 100 },
+                likes: { base: 40, unit: 1000 },
+                postViews: { base: 30, unit: 1000 }
+            }
+        };
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showAdminLogin() {
+            document.getElementById('adminLoginForm').style.display = 'block';
+        }
+
+        function showInfoPage() {
+            showPage('infoPage');
+        }
+
+        function showPlatformsPage() {
+            showPage('platformsPage');
+            updateTotalRegistrations();
+            updateAdminVisibility();
+        }
+
+        function showServicePage(platform) {
+            showPage('servicePage');
+            loadServices(platform);
+        }
+
+        function showRegisterPage() {
+            showPage('registerPage');
+            loadUsers();
+        }
+
+        function showPriceChange() {
+            showPage('priceChangePage');
+            loadPriceChangeForms();
+        }
+
+        function showPaymentPage() {
+            showPage('paymentPage');
+            updateOrderSummary();
+        }
+
+        function showOrderStatusPage() {
+            showPage('orderStatusPage');
+        }
+
+        function showOrderSuccessPage() {
+            showPage('orderSuccessPage');
+        }
+
+        function showOrderFailedPage() {
+            showPage('orderFailedPage');
+        }
+
+        function showAdminOrders() {
+            showPage('adminOrdersPage');
+            loadOrders();
+        }
+
+        function showOrderDetails(orderId) {
+            currentOrder = orders.find(o => o.id === orderId);
+            showPage('orderDetailsPage');
+            displayOrderDetails();
+        }
+
+        // Form Handlers
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                showInfoPage();
+            } else {
+                alert('Wrong email or password!');
+            }
+        });
+
+        document.getElementById('customerRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            if (users.find(u => u.email === email)) {
+                alert('Email already registered!');
+                return;
+            }
+            
+            users.push({ email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Registration successful! Please login.');
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('customerRegisterForm').reset();
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === 'Sairaj@262626') {
+                isAdmin = true;
+                showPlatformsPage();
+            } else {
+                alert('Wrong admin password!');
+            }
+        });
+
+        // Load Services
+        function loadServices(platform) {
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = '';
+            
+            document.getElementById('servicePageTitle').textContent = platform.charAt(0).toUpperCase() + platform.slice(1) + ' Services';
+            
+            const platformPrices = prices[platform];
+            
+            if (platform === 'instagram') {
+                container.innerHTML += createServiceCard('Instagram Followers', 'followers', platformPrices.followers, [100, 1000]);
+                container.innerHTML += createServiceCard('Instagram Reels Views', 'reelsViews', platformPrices.reelsViews, [10000, 20000, 30000, 40000, 50000]);
+                container.innerHTML += createServiceCard('Instagram Post Likes', 'postLikes', platformPrices.postLikes, [100, 200, 300, 400, 500]);
+                container.innerHTML += createServiceCard('Instagram Post Shares', 'postShares', platformPrices.postShares, [1000, 2000, 3000, 4000, 5000]);
+                container.innerHTML += createServiceCard('Instagram Story Poll Votes', 'storyPollVotes', platformPrices.storyPollVotes, [100, 200, 300, 400, 500]);
+            } else if (platform === 'facebook') {
+                container.innerHTML += createServiceCard('Facebook Followers', 'followers', platformPrices.followers, [1000, 2000, 3000, 4000, 5000]);
+                container.innerHTML += createServiceCard('Facebook Reels Views', 'reelsViews', platformPrices.reelsViews, [1000, 2000, 3000, 4000, 5000]);
+                container.innerHTML += createServiceCard('Facebook Post Likes', 'postLikes', platformPrices.postLikes, [100, 200, 300, 400, 500]);
+            } else if (platform === 'youtube') {
+                container.innerHTML += createServiceCard('YouTube Likes', 'likes', platformPrices.likes, [1000, 2000, 3000, 4000, 5000]);
+                container.innerHTML += createServiceCard('YouTube Subscribers', 'subscribers', platformPrices.subscribers, [], 'Not Available');
+            } else if (platform === 'telegram') {
+                container.innerHTML += createServiceCard('Telegram Subscribers', 'subscribers', platformPrices.subscribers, [100, 200, 300, 400, 500]);
+                container.innerHTML += createServiceCard('Telegram Likes', 'likes', platformPrices.likes, [1000, 2000, 3000, 4000, 5000]);
+                container.innerHTML += createServiceCard('Telegram Post Views', 'postViews', platformPrices.postViews, [1000, 2000, 3000, 4000, 5000]);
+            }
+        }
+
+        function createServiceCard(title, serviceKey, priceInfo, quantities, note = '') {
+            let html = `
+                <div class="service-card">
+                    <h5>${title}</h5>
+                    ${note ? `<p class="text-muted">${note}</p>` : ''}
+                    <div class="price-input-group">
+                        <input type="number" class="form-control" id="${serviceKey}Input" placeholder="Enter quantity" min="1">
+                        <span class="text-primary fw-bold">₹<span id="${serviceKey}Price">0</span></span>
+                    </div>
+                    <div class="quantity-select">
+            `;
+            
+            quantities.forEach(q => {
+                html += `<button class="quantity-btn" onclick="selectQuantity('${serviceKey}', ${q})">${q.toLocaleString()}</button>`;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        function selectQuantity(serviceKey, quantity) {
+            document.getElementById(serviceKey + 'Input').value = quantity;
+            calculatePrice(serviceKey);
+            
+            document.querySelectorAll('.quantity-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function calculatePrice(serviceKey) {
+            const input = document.getElementById(serviceKey + 'Input');
+            const quantity = parseInt(input.value) || 0;
+            let price = 0;
+            
+            selectedServices = selectedServices.filter(s => s.key !== serviceKey);
+            
+            if (quantity > 0) {
+                const platform = getCurrentPlatform();
+                const priceInfo = prices[platform][serviceKey];
+                
+                if (priceInfo.available !== false) {
+                    price = Math.round((quantity / priceInfo.unit) * priceInfo.base);
+                    selectedServices.push({
+                        key: serviceKey,
+                        quantity: quantity,
+                        price: price
+                    });
+                }
+            }
+            
+            document.getElementById(serviceKey + 'Price').textContent = price;
+        }
+
+        function getCurrentPlatform() {
+            const title = document.getElementById('servicePageTitle').textContent.toLowerCase();
+            if (title.includes('instagram')) return 'instagram';
+            if (title.includes('facebook')) return 'facebook';
+            if (title.includes('youtube')) return 'youtube';
+            if (title.includes('telegram')) return 'telegram';
+            return 'instagram';
+        }
+
+        function proceedToPayment() {
+            if (selectedServices.length === 0) {
+                alert('Please select at least one service!');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Please login first!');
+                showPage('loginPage');
+                return;
+            }
+            
+            showPaymentPage();
+        }
+
+        function updateOrderSummary() {
+            const summary = document.getElementById('orderSummary');
+            let total = 0;
+            let html = '<h5>Order Summary</h5><hr>';
+            
+            selectedServices.forEach(service => {
+                total += service.price;
+                html += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${service.key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} (${service.quantity.toLocaleString()})</span>
+                        <span>₹${service.price}</span>
+                    </div>
+                `;
+            });
+            
+            html += `<hr><div class="d-flex justify-content-between fw-bold"><span>Total</span><span>₹${total}</span></div>`;
+            summary.innerHTML = html;
+        }
+
+        function submitPayment() {
+            const transactionId = document.getElementById('transactionId').value;
+            const utrNumber = document.getElementById('utrNumber').value;
+            
+            if (!transactionId || !utrNumber) {
+                alert('Please enter both Transaction ID and UTR number!');
+                return;
+            }
+            
+            const order = {
+                id: Date.now(),
+                user: currentUser.email,
+                services: selectedServices,
+                transactionId: transactionId,
+                utrNumber: utrNumber,
+                status: 'pending',
+                date: new Date().toISOString()
+            };
+            
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            showOrderStatusPage();
+        }
+
+        function backToPayment() {
+            showPaymentPage();
+        }
+
+        // Admin Functions
+        function updateAdminVisibility() {
+            const adminElements = document.querySelectorAll('.admin-only');
+            adminElements.forEach(el => {
+                el.style.display = isAdmin ? 'block' : 'none';
+            });
+        }
+
+        function updateTotalRegistrations() {
+            document.getElementById('totalRegistrations').textContent = users.length;
+        }
+
+        function loadUsers() {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '';
+            
+            if (users.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">No registered users yet.</p>';
+                return;
+            }
+            
+            users.forEach((user, index) => {
+                container.innerHTML += `
+                    <div class="order-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${user.email}</h6>
+                                <small class="text-muted">Registered: ${new Date(user.date || Date.now()).toLocaleDateString()}</small>
+                            </div>
+                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${index})">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function deleteUser(index) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                users.splice(index, 1);
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUsers();
+                updateTotalRegistrations();
+            }
+        }
+
+        function loadPriceChangeForms() {
+            const container = document.getElementById('priceChangeContainer');
+            container.innerHTML = '';
+            
+            Object.keys(prices).forEach(platform => {
+                let html = `<h4 class="mt-4">${platform.charAt(0).toUpperCase() + platform.slice(1)} Prices</h4>`;
+                
+                Object.keys(prices[platform]).forEach(service => {
+                    const priceInfo = prices[platform][service];
+                    if (priceInfo.available !== false) {
+                        html += `
+                            <div class="mb-3">
+                                <label class="form-label">${service.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control" value="${priceInfo.base}" 
+                                               onchange="updatePrice('${platform}', '${service}', 'base', this.value)"
+                                               placeholder="Base Price">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" value="${priceInfo.unit}" 
+                                               onchange="updatePrice('${platform}', '${service}', 'unit', this.value)"
+                                               placeholder="Per Unit">
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                
+                container.innerHTML += html;
+            });
+        }
+
+        function updatePrice(platform, service, field, value) {
+            prices[platform][service][field] = parseFloat(value) || 0;
+            localStorage.setItem('prices', JSON.stringify(prices));
+        }
+
+        function loadOrders() {
+            const container = document.getElementById('ordersList');
+            container.innerHTML = '';
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">No orders yet.</p>';
+                return;
+            }
+            
+            orders.forEach(order => {
+                const total = order.services.reduce((sum, s) => sum + s.price, 0);
+                container.innerHTML += `
+                    <div class="order-item" onclick="showOrderDetails(${order.id})">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${order.user}</h6>
+                                <small class="text-muted">Total: ₹${total} | Date: ${new Date(order.date).toLocaleDateString()}</small>
+                            </div>
+                            <span class="status-badge status-${order.status}">${order.status.toUpperCase()}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function displayOrderDetails() {
+            const container = document.getElementById('orderDetailsContent');
+            const total = currentOrder.services.reduce((sum, s) => sum + s.price, 0);
+            
+            let html = `
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>User Email</h6>
+                        <p>${currentOrder.user}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Order Date</h6>
+                        <p>${new Date(currentOrder.date).toLocaleString()}</p>
+                    </div>
+                </div>
+                
+                <h6>Services Ordered</h6>
+                <ul class="list-unstyled mb-4">
+            `;
+            
+            currentOrder.services.forEach(service => {
+                html += `
+                    <li class="mb-2">
+                        ${service.key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} 
+                        (${service.quantity.toLocaleString()}) - ₹${service.price}
+                    </li>
+                `;
+            });
+            
+            html += `
+                </ul>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>Transaction ID</h6>
+                        <p>${currentOrder.transactionId}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>UTR Number</h6>
+                        <p>${currentOrder.utrNumber}</p>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>Total Amount: ₹${total}</strong>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function approveOrder() {
+            currentOrder.status = 'approved';
+            const orderIndex = orders.findIndex(o => o.id === currentOrder.id);
+            orders[orderIndex] = currentOrder;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Find the user and update their order status
+            const user = users.find(u => u.email === currentOrder.user);
+            if (user) {
+                user.lastOrderStatus = 'approved';
+            }
+            
+            showAdminOrders();
+        }
+
+        function rejectOrder() {
+            currentOrder.status = 'rejected';
+            const orderIndex = orders.findIndex(o => o.id === currentOrder.id);
+            orders[orderIndex] = currentOrder;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Find the user and update their order status
+            const user = users.find(u => u.email === currentOrder.user);
+            if (user) {
+                user.lastOrderStatus = 'rejected';
+            }
+            
+            showAdminOrders();
+        }
+
+        function deleteOrder() {
+            if (confirm('Are you sure you want to delete this order?')) {
+                orders = orders.filter(o => o.id !== currentOrder.id);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                showAdminOrders();
+            }
+        }
+
+        // Chat Functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const chatMessages = document.getElementById('chatMessages');
+            const messageHtml = `
+                <div class="mb-3">
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-primary text-white rounded p-2" style="max-width: 70%;">
+                            <small class="d-block text-start">${currentUser ? currentUser.email : 'Guest'}</small>
+                            ${message}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.innerHTML += messageHtml;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Simulate admin response
+            setTimeout(() => {
+                const responseHtml = `
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-start">
+                            <div class="bg-light rounded p-2" style="max-width: 70%;">
+                                <small class="d-block text-start">Admin</small>
+                                Thank you for your message. We'll get back to you soon!
+                            </div>
+                        </div>
+                    </div>
+                `;
+                chatMessages.innerHTML += responseHtml;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        // Handle Enter key in chat
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add event listeners for service inputs
+        document.addEventListener('input', function(e) {
+            if (e.target.type === 'number' && e.target.id.includes('Input')) {
+                const serviceKey = e.target.id.replace('Input', '');
+                calculatePrice(serviceKey);
+            }
+        });
+
+        // Initialize
+        updateAdminVisibility();
+    </script>
+</body>
+</html>
